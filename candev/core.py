@@ -2,6 +2,8 @@ INCREASED = 'increase'
 DECREASED = 'decrease'
 
 import numpy as np
+import pandas as pd
+from scipy import stats
 
 
 class VariableSummarizer(object):
@@ -127,3 +129,18 @@ class VariableSummarizer(object):
     def _get_historical_changes(self):
         return np.diff(self.historical_data)
 
+def strip_nan(x):
+    if np.ndim(x) > 1:
+        raise ValueError('x must be vector-like, got {}d array instead'.format(np.ndim(x)))
+    return np.asarray(x)[~np.isnan(x)]
+
+def surprisingness(historical_data, time_window):
+    if np.ndim(historical_data) > 1:
+        raise ValueError('historical_data must be vector-like, got {}d array instead'.format(np.ndim(historical_data)))
+    cleaned_data = strip_nan(historical_data)
+
+    weights = np.exp(-np.arange(0, len(cleaned_data))/float(time_window))
+    surprisingnesses = np.abs(stats.zscore(cleaned_data))
+    weighted_surprisingness = np.dot(weights, np.flip(surprisingnesses))
+
+    return weighted_surprisingness
