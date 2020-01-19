@@ -1,0 +1,12 @@
+{
+    "dataset_name": "GDP by industry",
+    "main_outcome_name": "All industries [T001]",
+    "value_column_name": "VALUE",
+    "variable_column_name": "North American Industry Classification System (NAICS)",
+    "date_column_name": "REF_DATE",
+    "surprisingness_time_window": 6.0,
+    "formatting": {
+        "num_long_form": 5,
+        "num_short_form": 5
+    }
+}
