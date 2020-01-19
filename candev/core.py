@@ -18,17 +18,17 @@ class VariableSummarizer(object):
         return self._get_qualitative_main() + '.'
 
     def long_qualitative_summary(self):
-        return ' '.join([self._get_qualitative_main(), self._get_detail()])
+        return ', '.join([self._get_qualitative_main(), self._get_detail()]) + '.'
 
     def short_quantitative_summary(self):
         return self._get_quantitative_main() + '.'
 
     def long_quantitative_summary(self):
-        return ' '.join([self._get_quantitative_main(), self._get_detail()])
+        return ', '.join([self._get_quantitative_main(), self._get_detail()]) + '.'
 
     # PRIVATE METHODS FOR STRING SUMMARIES
     def _get_qualitative_main(self):
-        qualitative_main =  '{name} {direction}'.format(
+        qualitative_main =  '{name} {direction}d'.format(
             name=self.name,
             direction=self._get_most_recent_change_label()
         )
