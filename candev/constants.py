@@ -1,2 +1,2 @@
-INCREASED = 'increased'
-DECREASED = 'decreased'
+INCREASED = 'increase'
+DECREASED = 'decrease'
