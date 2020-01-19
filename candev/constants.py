@@ -1,0 +1,2 @@
+INCREASED = 'increased'
+DECREASED = 'decreased'
