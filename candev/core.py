@@ -1,4 +1,5 @@
-from .constants import *
+INCREASED = 'increase'
+DECREASED = 'decrease'
 
 import numpy as np
 
