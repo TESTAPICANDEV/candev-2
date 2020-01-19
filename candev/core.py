@@ -7,7 +7,28 @@ from scipy import stats
 
 
 class VariableSummarizer(object):
+    """Summarize historical data in plain English.
+
+    Methods
+    -------
+    short_qualitative_summary()
+    long_qualitative_summary()
+    short_quantitative_summary()
+    long_quantitative_summary()
+
+    """
     def __init__(self, name, historical_data):
+        """Initialize VariableSummarizer.
+
+        Arguments
+        ---------
+        name : str
+            Name of variable being summarized.
+        historical_data : vector-like
+            Historical data to summarize. Must be ordered from oldest to
+            newest.
+
+        """
         self.name = name
 
         self.historical_data = historical_data
@@ -49,7 +70,7 @@ class VariableSummarizer(object):
 
     def _get_detail(self):
         if self._recent_trend() and self._continues_recent_trend():
-            detail = 'the {number_consecutive_months} consecutive months of {direction}s'.format(
+            detail = 'the {number_consecutive_months} consecutive month of {direction}s'.format(
                 number_consecutive_months=self._get_number_of_previous_months_in_trend() + 1,
                 direction=self._get_most_recent_change_label()
             )
@@ -60,11 +81,11 @@ class VariableSummarizer(object):
             )
         elif not self._recent_trend():
             if self._get_historical_changes()[-2] > 0.:
-                detail = 'following an increase of {:.1f} the previous month.'.format(self._get_historical_changes()[-2])
+                detail = 'following an increase of {:.1f} the previous month'.format(self._get_historical_changes()[-2])
             elif self._get_historical_changes()[-2] < 0.:
-                detail = 'following a decrease of {:.1f} the previous month.'.format(np.abs(self._get_historical_changes()[-2]))
+                detail = 'following a decrease of {:.1f} the previous month'.format(np.abs(self._get_historical_changes()[-2]))
             else:
-                detail = 'following no change the previous month.'
+                detail = 'following no change the previous month'
         else:
             raise RuntimeError('Unexpectedly reached end of switch.')
 
@@ -135,6 +156,7 @@ def strip_nan(x):
     return np.asarray(x)[~np.isnan(x)]
 
 def surprisingness(historical_data, time_window):
+    """Compute the noteworthiness of historical data."""
     if np.ndim(historical_data) > 1:
         raise ValueError('historical_data must be vector-like, got {}d array instead'.format(np.ndim(historical_data)))
     cleaned_data = strip_nan(historical_data)
